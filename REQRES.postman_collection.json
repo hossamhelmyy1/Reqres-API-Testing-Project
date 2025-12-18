@@ -1,0 +1,910 @@
+{
+	"info": {
+		"_postman_id": "b40f41c1-7378-4894-88e5-dcf0f279566b",
+		"name": "REQRES",
+		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47308689",
+		"_collection_link": "https://hosamhelmii01-8098953.postman.co/workspace/Hosam-Eldeen-khaled-AbdelGawad'~49f95667-465f-43a6-8e99-7c22a14237d4/collection/47308689-b40f41c1-7378-4894-88e5-dcf0f279566b?action=share&source=collection_link&creator=47308689"
+	},
+	"item": [
+		{
+			"name": "Passed Requests",
+			"item": [
+				{
+					"name": "Reqres Api Key.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/register?key=reqres-free-v1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"register"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "reqres-free-v1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"    var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Correct Page\", function () {",
+									"    pm.expect(pm.response.json().page).to.eql(2);",
+									"});",
+									"pm.test(\"Correct per_page\", function () {",
+									"    pm.expect(jsonData.per_page).to.eql(6);",
+									"});",
+									"pm.test(\"Correct total\", function () {",
+									"    pm.expect(jsonData.total).to.eql(12);",
+									"});",
+									"pm.test(\"Correct total_pages\", function () {",
+									"    pm.expect(jsonData.total_pages).to.eql(2);",
+									"});",
+									"",
+									"pm.test(\"Correct JSON Responses\", function () {",
+									"    pm.expect(jsonData.page).to.eql(2);",
+									"    pm.expect(jsonData.per_page).to.eql(6);",
+									"    pm.expect(jsonData.total).to.eql(12);",
+									"    pm.expect(jsonData.total_pages).to.eql(2);",
+									"});",
+									"",
+									"pm.test(\"Correct total_pages\", function () {",
+									"    pm.expect(jsonData.data[0].id).to.eql(7);",
+									"});",
+									"",
+									"",
+									"//pm.test(\"Body is correct\", function () {",
+									"//    pm.response.to.have.body(\"response_body_string\");",
+									"//});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/users?page=2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List a single User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"    var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const userid = pm.environment.get(\"UserID\")",
+									"",
+									"pm.test(\"Correct User Fetched\", function () {",
+									"    pm.expect(jsonData.data.id).to.eql(userid);",
+									"});",
+									"",
+									"",
+									"//pm.test(\"Correct JSON Response\", function () {",
+									"//    pm.expect(jsonData.value).to.eql(100);",
+									"//});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const rndmvalue = Math.floor(Math.random()*12) +1;",
+									"pm.environment.set(\"UserID\", rndmvalue);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/users/{{UserID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{UserID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List a User not found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/users/23",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Resources",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"    var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Correct JSON Responses\", function () {",
+									"    pm.expect(jsonData.page).to.eql(1);",
+									"    pm.expect(jsonData.per_page).to.eql(6);",
+									"    pm.expect(jsonData.total).to.eql(12);",
+									"    pm.expect(jsonData.total_pages).to.eql(2);",
+									"});",
+									"",
+									"pm.test(\"Correct ID\", function () {",
+									"    pm.expect(jsonData.data[0].id).to.eql(1);",
+									"});",
+									"",
+									"",
+									"//---------------------------------",
+									"// assignment problem",
+									"const resourcename = pm.environment.get(\"ResourceName\")",
+									"",
+									"pm.test('User name from the last (list a resource) exists', function () {",
+									"    let found = false;",
+									"",
+									"    for (let i = 0; i < jsonData.data.length; i++) {",
+									"        if (jsonData.data[i].name === resourcename) {",
+									"            found = true;",
+									"            break;",
+									"        }",
+									"    }",
+									"",
+									"    pm.expect(found).to.be.true;",
+									"});",
+									"",
+									"// not all resources appear actually so for last function to work the name needs to be among the ones visible here."
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/unkown",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"unkown"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List A Single Resource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"    var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"const resourceid = pm.environment.get(\"ResourceID\")",
+									"",
+									"pm.test(\"Correct Resource Fetched\", function () {",
+									"    pm.expect(jsonData.data.id).to.eql(resourceid);",
+									"});",
+									"",
+									"let resourcename = jsonData.data.name;",
+									"pm.environment.set(\"ResourceName\", resourcename);",
+									"",
+									"",
+									"pm.test(\"Correct Name\", function () {",
+									"    pm.expect(jsonData.data.name).to.eql(resourcename);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const rndmvalue = Math.floor(Math.random()*12) +1;",
+									"pm.environment.set(\"ResourceID\", rndmvalue);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/unkown/{{ResourceID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"unkown",
+								"{{ResourceID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List A Resource Not Found",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/unkown/23",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"unkown",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delayed Response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/users?delay=3",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "delay",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Failed Requests",
+			"item": [
+				{
+					"name": "Create A User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"morpheus\",\n    \"job\": \"leader\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update A User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"morpheus\",\n    \"job\": \"zion resident\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update A User (Patch)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"morpheus\",\n    \"job\": \"zion resident\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/users/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete A User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/users/2",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Successful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"eve.holt@reqres.in\",\n    \"password\": \"pistol\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register Unsuccessful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"sydney@fife\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Successful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"eve.holt@reqres.in\",\n    \"password\": \"cityslicka\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Unsuccessful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "reqres-free-v1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"peter@klaven\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.test(\"Response time is less than 1000ms\", function () {",
+					"    const currentrequestname = pm.info.requestName;",
+					"",
+					"    if( currentrequestname === \"Delayed Response\"){",
+					"",
+					"        console.log(\"Skipping 'Response time is less than 1000ms' test for this request.\");",
+					"        return;",
+					"    }",
+					"",
+					"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+					"});"
+				]
+			}
+		}
+	]
+}
